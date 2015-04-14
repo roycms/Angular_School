@@ -1,0 +1,137 @@
+<html lang="en" ng-app="App">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="bower_components/amazeui/dist/css/amazeui.css">
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="scripts/app.js"></script>
+    <script src="scripts/main.js"></script>
+
+</head>
+<body ng-controller="fileUploadCtrl"  ng-file-drop  ng-model="files" class="drop-box"
+      drag-over-class="dragover" ng-multiple="true" allow-dir="true"
+      accept="image/*">
+
+<div  ng-controller="IndexCtl" >
+    <header class="am-topbar am-topbar-inverse">
+        <div class="am-container">
+            <h1 class="am-topbar-brand">
+                <a href="#/ActivityList">灵动校园</a>
+            </h1>
+            <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only" data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
+
+            <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+                <ul class="am-nav am-nav-pills am-topbar-nav">
+                    <li><a href="#"></a></li>
+                    <li><a href="#/ActivityList">活动广场</a></li>
+                    <li><a href="#/HotRecordList">精彩推荐</a></li>
+                    <!--<li><a href="#/ActivityList">资源广场</a></li>-->
+
+                    <li><a href="#"></a></li>
+                </ul>
+
+                <form style="padding: 0px;margin: 10px 0px 0px 0px" class="am-topbar-form am-topbar-left am-form-inline" role="search">
+                    <div class="am-form-group">
+                        <input type="text" ng-model="keyword" class="am-form-field am-input-sm" placeholder="搜:春季游学活动">
+                    </div>
+                </form>
+
+                <div class="am-topbar-right">
+                    <div class="am-dropdown" data-am-dropdown="{boundary: '.am-topbar'}">
+                        <a href="#AddActivity" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm am-dropdown-toggle" data-am-dropdown-toggle>
+                            创建活动
+                            <span class="am-icon-plus"></span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="am-topbar-right">
+                    <button ng-click="session_name!=null?(loginOutShow=!loginOutShow):(loginShow=!loginShow)" class="am-btn am-btn-primary am-topbar-btn am-btn-sm">
+                        {{(session_name!=''?session_name:"登录") || (session_name!=null?session_name:"登录")}}
+                        <span class="am-badge am-badge-danger am-round"></span></button>
+
+
+                    <div ng-show="loginOutShow"  class="am-popup am-modal-active" style="display: block;">
+                        <div class="am-popup-inner"><div class="am-popup-hd"><h4 class="am-popup-title">退出登录</h4>
+                            <span ng-click="loginOutShow=!loginOutShow" class="am-close" data-am-modal-close="">×</span></div>
+                            <div class="am-popup-bd">
+
+
+                                <br><br><br>
+                                {{session_name}} 确认要退出吗？
+
+                                <button class="am-btn am-btn-primary " ng-click="loginOut()" type="submit">退出登录</button>
+                                <br><br><br>  <br><br><br><br>
+                            </div></div></div>
+                    <!--遮罩层-->
+                    <div ng-click="loginOutShow=!loginOutShow" ng-show="loginOutShow" data-am-dimmer="" class="am-dimmer am-active" style="display: block;">
+                    </div>
+
+
+                    <div ng-show="loginShow" id="my-popup" class="am-popup am-modal-active" style="display: block;">
+                        <div class="am-popup-inner"><div class="am-popup-hd"><h4 class="am-popup-title">会员登录</h4>
+                            <span ng-click="loginShow=!loginShow" class="am-close" data-am-modal-close="">×</span></div>
+                            <div class="am-popup-bd">
+
+                                <form class="am-form" method="post">
+                                    <label for="username">用户:</label>
+                                    <input ng-model="username" placeholder="用户名" type="text" value="" id="username" name="username">
+                                    <br>
+                                    <label for="password">密码:</label>
+                                    <input ng-model="password" placeholder="密码" type="password" value="" id="password" name="password">
+                                    <br>
+                                    <label for="remember-me">
+                                        <input type="checkbox" id="remember-me">
+                                        记住密码
+                                    </label>
+                                    <br>
+                                    <div class="am-cf">
+                                        <input ng-click="login()" type="submit" class="am-btn am-btn-primary am-btn-sm am-fl" value="登 录" name="">
+                                        <input type="submit" class="am-btn am-btn-default am-btn-sm am-fr" value="忘记密码 ^_^? " name="">
+                                    </div>
+                                </form>
+
+                            </div></div></div>
+
+
+                    <!--遮罩层-->
+                    <div ng-click="loginShow=!loginShow" ng-show="loginShow" data-am-dimmer="" class="am-dimmer am-active" style="display: block;">
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!--主体部分开始-->
+    <div ng-view class="am-g"></div>
+    <!--主体部分结束-->
+
+    <footer data-am-widget="footer" class="am-footer am-footer-default" data-am-footer="{  }" style="background-color: #333">
+        <div class="am-footer-switch">
+            <span class="am-footer-ysp" data-rel="mobile" data-am-modal="{target: '#am-switch-mode'}">灵动校园</span>
+            <span class="am-footer-divider">|</span>
+            <a data-rel="desktop" class="am-footer-desktop"
+               href="#help">电脑版</a>
+            <span class="am-footer-divider">|</span>
+            <a data-rel="desktop" class="am-footer-desktop"
+               href="#help">PAD</a>
+            <span class="am-footer-divider">|</span>
+            <a data-rel="desktop" class="am-footer-desktop"
+               href="#help">手机</a>
+        </div>
+        <div class="am-footer-miscs ">
+            <p>由
+                <a href="http://www.sunfuedu.com/" title="三芳科技" target="_blank">SunFu</a>提供技术支持</p>
+            <p>CopyRight©2014 AllMobilize Inc.</p>
+            <p>京ICP备9883158</p>
+        </div>
+    </footer>
+
+</div>
+
+
+<div class="ueditor" ng-model="content" config="config" required></div>
+
+</body>
+</html>
